@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Middleware\AdminAuth;
 
 
 // / redirects to /posts
@@ -15,5 +16,9 @@ Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{slug}', [PostController::class, 'show']);
 
 // /admin + admin post
-Route::get('/admin', [AdminController::class, 'index']);
-Route::post('/admin/upload', [AdminController::class, 'upload']);
+Route::get('/admin', [AdminController::class, 'index'])->middleware(AdminAuth::class);
+Route::post('/admin/upload', [AdminController::class, 'upload'])->middleware(AdminAuth::class);
+
+// /admin/login + login post
+Route::get('/admin/login', [AdminController::class, 'login']);
+Route::post('/admin/login', [AdminController::class, 'loginPost']);

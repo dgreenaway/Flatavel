@@ -11,6 +11,22 @@ class AdminController
         return view('admin');
     }
 
+    public function login()
+    {
+        return view('admin-login');
+    }
+
+    public function loginPost(Request $request)
+    {
+        if ($request->password === env('ADMIN_PASSWORD')) {
+            session(['admin_authed' => true]);
+            return redirect('/admin');
+        }
+
+        return back()->withErrors(['password' => 'Incorrect password']);
+    }
+
+
     public function upload(Request $request)
     {
         $request->validate([

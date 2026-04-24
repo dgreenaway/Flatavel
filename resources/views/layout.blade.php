@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Daniel Greenaway')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
+
 <body>
     <div class="crt-bezel">
         <div class="crt-screen-wrap">
@@ -33,8 +35,10 @@
                 </div>
                 <nav class="tt-nav">
                     <ul>
-                        <li><a href="/posts">ALL POSTS</a></li>
-                        <li><a href="/admin">ADMIN</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/posts">Blog</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
                     </ul>
                 </nav>
                 <main class="tt-main">
@@ -45,7 +49,7 @@
                 <footer class="tt-footer">
                     <div class="tt-footer-info">
                         <span>&copy; {{ date('Y') }} Daniel Greenaway</span>
-                        <span class="tt-cyan">LITE BLOG</span>
+                        <span class="tt-cyan"><a href="/admin">Admin</a></span>
                     </div>
                 </footer>
             </div>
@@ -54,7 +58,9 @@
     <script>
         const el = document.getElementById('tt-clock');
         const tick = () => el.textContent = new Date().toLocaleTimeString('en-GB');
-        tick(); setInterval(tick, 1000);
+        tick();
+        setInterval(tick, 1000);
     </script>
 </body>
+
 </html>
