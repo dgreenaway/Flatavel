@@ -6,7 +6,7 @@
 <article>
     <header>
         <h1>{{ $post->title }}</h1>
-        <time>{{ $post->date }}</time>
+        <time><time>{{ date('d M Y', $post->date) }}</time>
     </header>
 
     <div class="prose">
