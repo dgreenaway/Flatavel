@@ -1,7 +1,8 @@
 ---
-title: Difficult 2nd Post
-date: 2024-03-15
-description: My very first blog post.
+title: Testing
+date: "2024-03-15"
+description: My first post.
+image: hello-world.jpg
 ---
 
 # Blog Blog BLog

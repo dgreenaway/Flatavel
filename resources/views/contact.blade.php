@@ -1,12 +1,12 @@
 @extends('layout')
 
 @section('title', 'Contact')
-@section('page_num', '103')
+@section('page_num', 'P103')
 
 @section('content')
 <div class="tt-page-title-bar green">
     <h1 class="tt-page-title">Contact</h1>
-    <span class="tt-page-badge">P200</span>
+    <span class="tt-page-badge">P103</span>
 </div>
 <div class="tt-content">
     @if (session('success'))

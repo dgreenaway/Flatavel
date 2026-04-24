@@ -1,7 +1,8 @@
 ---
-title: Hello World
-date: 2024-03-15
-description: My very first blog post.
+title: My Very First Blog Post
+date: "2024-03-15"
+description: My first post.
+image: hello-world.jpg
 ---
 
 # Welcome to my blog

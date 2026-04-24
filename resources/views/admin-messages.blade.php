@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title', 'Messages')
-@section('page_num', '998')
+@section('page_num', 'P998')
 
 
 @section('content')

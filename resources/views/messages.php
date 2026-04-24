@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title', 'Messages')
-@section('page_num', '105')
+@section('page_num', 'P105')
 
 @section('content')
 <div class="tt-page-title-bar magenta">
