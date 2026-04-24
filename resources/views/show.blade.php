@@ -3,16 +3,16 @@
 @section('title', $post->title)
 
 @section('content')
-<article>
-    <header>
-        <h1>{{ $post->title }}</h1>
-        <time><time>{{ date('d M Y', $post->date) }}</time>
-    </header>
-
-    <div class="prose">
+<div class="tt-page-title-bar yellow">
+    <h1 class="tt-page-title">{{ $post->title }}</h1>
+</div>
+<div class="tt-content">
+    <div class="tt-article-meta">{{ date('d M Y', $post->date) }}</div>
+    <div class="tt-article-body">
         {!! $post->body !!}
     </div>
-</article>
-
-<a href="/posts">← Back to all posts</a>
+    <div class="tt-article-nav">
+        <a class="prev" href="/posts">Back to all posts</a>
+    </div>
+</div>
 @endsection

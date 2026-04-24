@@ -1,92 +1,1924 @@
-/* Reset & base */
+/*
+Theme Name:  Ceefax Portfolio
+Theme URI:   https://github.com/
+Author:      Your Name
+Author URI:  https://yoursite.com
+Description: A teletext-inspired portfolio theme evoking 1990s BBC Ceefax. Built for portfolio, resume, and blog use. Faithful modern interpretation with monospaced typography, teletext colour palette, and blocky grid layouts.
+Version:     1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 8.0
+License:     GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: ceefax-portfolio
+Tags:        portfolio, blog, one-column, custom-menu, featured-images, accessibility-ready
+*/
+
+/* ============================================================
+   IMPORTS
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES — TELETEXT PALETTE
+   ============================================================ */
+
+:root {
+    --tt-black: #000000;
+    --tt-white: #ffffff;
+    --tt-red: #ff2222;
+    --tt-green: #00ee00;
+    --tt-yellow: #ffff00;
+    --tt-blue: #0000cc;
+    --tt-magenta: #ff22ff;
+    --tt-cyan: #00eeee;
+    --tt-bg: #060606;
+    --tt-header-bg: #000088;
+    --tt-panel-bg: #000011;
+    --tt-font: "VT323", "Courier New", Courier, monospace;
+    --tt-base: 20px;
+    --tt-max-width: 1200px;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background: var(--tt-black);
+    color: var(--tt-white);
+    font-family: var(--tt-font);
+    font-size: var(--tt-base);
+    line-height: 1.45;
+    scroll-behavior: smooth;
 }
 
 body {
-  font-family: Georgia, serif;
-  font-size: 18px;
-  line-height: 1.7;
-  color: #222;
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
+    background: var(--tt-bg);
+    min-height: 100vh;
+    position: relative;
 }
 
-/* Header */
-header {
-  margin-bottom: 3rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 1rem;
-}
-header a {
-  font-weight: bold;
-  text-decoration: none;
-  color: #222;
-  font-size: 1.2rem;
-}
-
-/* Post list */
-article {
-  margin-bottom: 2.5rem;
-}
-article h2 a {
-  color: #222;
-  text-decoration: none;
-}
-article h2 a:hover {
-  text-decoration: underline;
-}
-time {
-  font-size: 0.85rem;
-  color: #777;
-  display: block;
-  margin: 0.25rem 0 0.5rem;
+/* Subtle CRT scanline overlay — does not obscure text */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.04) 2px,
+        rgba(0, 0, 0, 0.04) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
 }
 
-/* Single post */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ============================================================
+   SKIP LINK & ACCESSIBILITY
+   ============================================================ */
+
+.skip-link {
+    position: absolute;
+    top: -48px;
+    left: 0;
+    background: var(--tt-yellow);
+    color: var(--tt-black);
+    padding: 8px 16px;
+    z-index: 100000;
+    font-family: var(--tt-font);
+    font-size: 1.1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: top 0.1s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    word-wrap: normal !important;
+}
+
+/* ============================================================
+   SCREEN WRAPPER
+   ============================================================ */
+
+.tt-screen {
+    width: 100%;
+    /*  max-width: var(--tt-max-width); */
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid #111;
+    border-right: 2px solid #111;
+    overflow: hidden;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.tt-header {
+    background: var(--tt-header-bg);
+    padding: 6px 12px;
+    border-bottom: 2px solid var(--tt-cyan);
+}
+
+.tt-header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tt-site-name a {
+    font-size: 1.5rem;
+    color: var(--tt-white);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.tt-site-name a:hover,
+.tt-site-name a:focus {
+    color: var(--tt-yellow);
+    outline: none;
+}
+
+.tt-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.15rem;
+}
+
+.tt-page-num {
+    color: var(--tt-yellow);
+    font-size: 1.4rem;
+    min-width: 50px;
+}
+
+.tt-channel {
+    color: var(--tt-cyan);
+}
+
+.tt-clock {
+    color: var(--tt-white);
+    min-width: 75px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   COLOR BAR
+   ============================================================ */
+
+.tt-color-bar {
+    display: flex;
+    height: 8px;
+}
+
+.tt-color-bar > span {
+    flex: 1;
+}
+
+.tt-cb-white {
+    background: #ffffff;
+}
+.tt-cb-yellow {
+    background: #ffff00;
+}
+.tt-cb-cyan {
+    background: #00eeee;
+}
+.tt-cb-green {
+    background: #00ee00;
+}
+.tt-cb-magenta {
+    background: #ff22ff;
+}
+.tt-cb-red {
+    background: #ff2222;
+}
+.tt-cb-blue {
+    background: #0000cc;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+.tt-nav {
+    background: #000033;
+    border-bottom: 1px solid #0000cc;
+    padding: 0 12px;
+}
+
+.tt-nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tt-nav li {
+    display: flex;
+}
+
+.tt-nav a {
+    display: block;
+    padding: 5px 12px;
+    color: var(--tt-cyan);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    border-right: 1px solid #0000cc;
+    transition:
+        background 0.08s,
+        color 0.08s;
+}
+
+.tt-nav li:first-child a {
+    border-left: 1px solid #0000cc;
+}
+
+.tt-nav a:hover,
+.tt-nav a:focus,
+.tt-nav .current-menu-item > a,
+.tt-nav .current_page_item > a {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+    outline: none;
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+
+.tt-main {
+    flex: 1;
+    overflow-y: scroll;
+    min-height: 0;
+}
+
+/* ============================================================
+   PAGE WRAPPER & ANIMATIONS
+   ============================================================ */
+
+.tt-page {
+    padding: 0 0 24px;
+    animation: tt-fadein 0.3s ease-in;
+}
+
+@keyframes tt-fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================================
+   TELETEXT SUB-PAGE NAVIGATION  (P200/1, P200/2 tabs)
+   ============================================================ */
+
+.tt-subpage-nav {
+    display: flex;
+    background: #000011;
+    border-bottom: 1px solid #1a1a1a;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.tt-subpage-btn {
+    background: transparent;
+    border: none;
+    border-right: 1px solid #1a1a1a;
+    color: var(--tt-cyan);
+    font-family: var(--tt-font);
+    font-size: 1.1rem;
+    padding: 4px 14px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: background 0.08s;
+}
+
+.tt-subpage-btn:hover {
+    background: #001414;
+    color: var(--tt-white);
+}
+
+.tt-subpage-btn[aria-selected="true"] {
+    background: var(--tt-cyan);
+    color: var(--tt-black);
+}
+
+.tt-subpage {
+    display: none;
+    width: 100%;
+}
+
+.tt-subpage.is-active {
+    display: block;
+    width: 100%;
+    animation: tt-fadein 0.2s ease-in;
+}
+
+/* ============================================================
+   PAGE TITLE BAR  (Ceefax coloured header strip)
+   ============================================================ */
+
+.tt-page-title-bar {
+    background: var(--tt-cyan);
+    color: var(--tt-black);
+    padding: 6px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.tt-page-title-bar.yellow {
+    background: var(--tt-yellow);
+}
+.tt-page-title-bar.green {
+    background: var(--tt-green);
+}
+.tt-page-title-bar.magenta {
+    background: var(--tt-magenta);
+}
+.tt-page-title-bar.red {
+    background: var(--tt-red);
+    color: var(--tt-white);
+}
+.tt-page-title-bar.blue {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+}
+
+.tt-page-title {
+    font-size: 1.7rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.tt-page-badge {
+    font-size: 1.2rem;
+    background: var(--tt-black);
+    color: var(--tt-yellow);
+    padding: 2px 8px;
+    flex-shrink: 0;
+}
+
+/* ============================================================
+   CONTENT AREA PADDING
+   ============================================================ */
+
+.tt-content {
+    padding: 12px 12px 0;
+}
+
+/* ============================================================
+   DIVIDERS
+   ============================================================ */
+
+.tt-divider {
+    border: none;
+    border-top: 1px solid #0000cc;
+    margin: 12px 0;
+}
+
+.tt-divider-dbl {
+    border: none;
+    border-top: 3px double #0000cc;
+    margin: 12px 0;
+}
+
+.tt-section-rule {
+    color: var(--tt-blue);
+    font-size: 1rem;
+    overflow: hidden;
+    margin: 8px 0;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+}
+
+/* ============================================================
+   SECTION MARKER
+   ============================================================ */
+
+.tt-section-marker {
+    color: var(--tt-yellow);
+    font-size: 1.15rem;
+    margin: 16px 0 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.tt-section-marker::before {
+    content: ">> ";
+    color: var(--tt-cyan);
+}
+
+/* ============================================================
+   PANELS / BOXES
+   ============================================================ */
+
+.tt-panel {
+    border: 1px solid #0000cc;
+    background: var(--tt-panel-bg);
+    margin: 10px 0;
+}
+
+.tt-panel-header {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+    padding: 4px 12px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tt-panel-body {
+    padding: 10px 12px;
+}
+
+.tt-panel.cyan .tt-panel-header {
+    background: var(--tt-cyan);
+    color: var(--tt-black);
+}
+.tt-panel.yellow .tt-panel-header {
+    background: var(--tt-yellow);
+    color: var(--tt-black);
+}
+.tt-panel.green .tt-panel-header {
+    background: var(--tt-green);
+    color: var(--tt-black);
+}
+.tt-panel.red .tt-panel-header {
+    background: var(--tt-red);
+    color: var(--tt-white);
+}
+
+/* ============================================================
+   INDEX / NAVIGATION LIST  (Ceefax page index style)
+   ============================================================ */
+
+.tt-index-list {
+    list-style: none;
+    margin: 12px 0;
+}
+
+.tt-index-list li {
+    border-bottom: 1px dotted #001166;
+}
+
+.tt-index-list li:last-child {
+    border-bottom: none;
+}
+
+.tt-index-list a {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 0;
+    text-decoration: none;
+    width: 100%;
+    transition: background 0.08s;
+}
+
+.tt-index-list a:hover,
+.tt-index-list a:focus {
+    background: #000033;
+    outline: none;
+}
+
+.tt-index-list a:hover .tt-index-label,
+.tt-index-list a:focus .tt-index-label {
+    color: var(--tt-yellow);
+}
+
+.tt-index-num {
+    color: var(--tt-yellow);
+    font-size: 1.25rem;
+    min-width: 52px;
+    flex-shrink: 0;
+}
+
+.tt-index-label {
+    color: var(--tt-white);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    flex: 1;
+}
+
+.tt-index-desc {
+    color: var(--tt-cyan);
+    font-size: 1rem;
+    text-align: right;
+}
+
+/* ============================================================
+   GRID HELPERS
+   ============================================================ */
+
+.tt-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0;
+}
+
+.tt-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 12px 0;
+}
+
+/* ============================================================
+   BLINKING CURSOR
+   ============================================================ */
+
+.tt-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1em;
+    background: var(--tt-white);
+    vertical-align: text-bottom;
+    animation: tt-blink 1s step-end infinite;
+}
+
+@keyframes tt-blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+.tt-blink {
+    animation: tt-blink 1s step-end infinite;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--tt-font);
+    font-weight: normal;
+    line-height: 1.2;
+}
+
 h1 {
-  font-size: 2rem;
-  line-height: 1.25;
-  margin-bottom: 0.5rem;
+    font-size: 2rem;
+    color: var(--tt-yellow);
 }
-.prose h2 {
-  font-size: 1.4rem;
-  margin: 2rem 0 0.5rem;
+h2 {
+    font-size: 1.75rem;
+    color: var(--tt-cyan);
 }
-.prose p {
-  margin-bottom: 1rem;
+h3 {
+    font-size: 1.5rem;
+    color: var(--tt-green);
 }
-.prose ul,
-.prose ol {
-  margin: 0 0 1rem 1.5rem;
+h4 {
+    font-size: 1.25rem;
+    color: var(--tt-white);
 }
-.prose code {
-  background: #f4f4f4;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-size: 0.9em;
-}
-.prose pre {
-  background: #f4f4f4;
-  padding: 1rem;
-  overflow-x: auto;
-  margin-bottom: 1rem;
-  border-radius: 4px;
-}
-.prose a {
-  color: #185fa5;
+h5 {
+    font-size: 1.1rem;
+    color: var(--tt-white);
 }
 
-/* Footer */
-footer {
-  margin-top: 4rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
-  font-size: 0.85rem;
-  color: #999;
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    color: var(--tt-white);
+}
+
+a {
+    color: var(--tt-cyan);
+    text-decoration: underline;
+}
+
+a:hover,
+a:focus {
+    color: var(--tt-yellow);
+    outline: 2px solid var(--tt-yellow);
+    outline-offset: 2px;
+}
+
+ul,
+ol {
+    margin: 8px 0 12px 22px;
+    font-size: 1.1rem;
+}
+
+li {
+    margin-bottom: 4px;
+    color: var(--tt-white);
+}
+
+code {
+    background: #000033;
+    color: var(--tt-cyan);
+    padding: 1px 6px;
+    border: 1px solid #0000cc;
+    font-family: var(--tt-font);
+}
+
+pre {
+    background: #000033;
+    border: 1px solid #0000cc;
+    padding: 12px;
+    overflow-x: auto;
+    margin: 12px 0;
+    color: var(--tt-green);
+}
+
+pre code {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+blockquote {
+    border-left: 4px solid var(--tt-yellow);
+    padding: 8px 12px;
+    margin: 12px 0;
+    color: var(--tt-yellow);
+    font-size: 1.15rem;
+}
+
+blockquote p {
+    color: var(--tt-yellow);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #0000cc;
+    margin: 16px 0;
+}
+
+strong,
+b {
+    color: var(--tt-white);
+}
+
+em,
+i {
+    color: #cccccc;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 1rem;
+}
+
+th {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+    padding: 4px 10px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+td {
+    border: 1px solid #0000aa;
+    padding: 4px 10px;
+    color: var(--tt-white);
+}
+
+tr:nth-child(even) td {
+    background: #000022;
+}
+
+/* ============================================================
+   COLOUR UTILITY CLASSES
+   ============================================================ */
+
+.tt-yellow {
+    color: var(--tt-yellow) !important;
+}
+.tt-cyan {
+    color: var(--tt-cyan) !important;
+}
+.tt-green {
+    color: var(--tt-green) !important;
+}
+.tt-red {
+    color: var(--tt-red) !important;
+}
+.tt-magenta {
+    color: var(--tt-magenta) !important;
+}
+.tt-white {
+    color: var(--tt-white) !important;
+}
+.tt-blue-t {
+    color: #4488ff !important;
+}
+
+.tt-upper {
+    text-transform: uppercase;
+}
+.tt-center {
+    text-align: center;
+}
+
+/* ============================================================
+   FOOTER COLOURED BUTTON NAV  (teletext remote style)
+   ============================================================ */
+
+.tt-footer {
+    border-top: 2px solid #0000cc;
+    background: #000011;
+    padding: 8px 12px 12px;
+    margin-top: auto;
+}
+
+.tt-footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.tt-btn {
+    display: inline-block;
+    padding: 4px 12px;
+    font-family: var(--tt-font);
+    font-size: 1.05rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.1s;
+}
+
+.tt-btn:hover,
+.tt-btn:focus {
+    opacity: 0.85;
+    outline: 2px solid var(--tt-white);
+}
+
+.tt-btn-red {
+    background: var(--tt-red);
+    color: var(--tt-white);
+}
+.tt-btn-green {
+    background: var(--tt-green);
+    color: var(--tt-black);
+}
+.tt-btn-yellow {
+    background: var(--tt-yellow);
+    color: var(--tt-black);
+}
+.tt-btn-blue {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+}
+.tt-btn-cyan {
+    background: var(--tt-cyan);
+    color: var(--tt-black);
+}
+.tt-btn-magenta {
+    background: var(--tt-magenta);
+    color: var(--tt-black);
+}
+.tt-btn-white {
+    background: var(--tt-white);
+    color: var(--tt-black);
+}
+
+.tt-footer-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #111;
+}
+
+/* ============================================================
+   HOMEPAGE
+   ============================================================ */
+
+.tt-home-hero {
+    background: #000;
+    border: 2px solid var(--tt-blue);
+    padding: 20px 16px;
+    margin: 12px;
+    text-align: center;
+}
+
+.tt-hero-img {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 12px;
+}
+
+.tt-home-hero-name {
+    display: block;
+    font-size: 2.4rem;
+    color: var(--tt-yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.1;
+}
+
+.tt-home-hero-role {
+    display: block;
+    font-size: 1.4rem;
+    color: var(--tt-cyan);
+    margin-top: 6px;
+    text-transform: uppercase;
+}
+
+.tt-home-hero-cursor {
+    display: inline-block;
+    width: 12px;
+    height: 1.1em;
+    background: var(--tt-white);
+    vertical-align: text-bottom;
+    animation: tt-blink 1s step-end infinite;
+    margin-left: 3px;
+}
+
+.tt-ticker-bar {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+    padding: 4px 12px;
+    font-size: 1.05rem;
+    overflow: hidden;
+    margin: 4px 0;
+}
+
+.tt-ticker-label {
+    color: var(--tt-yellow);
+    margin-right: 8px;
+}
+
+/* ============================================================
+   CV / RESUME PAGE
+   ============================================================ */
+
+.tt-cv-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--tt-green);
+    color: var(--tt-black);
+    padding: 8px 20px;
+    font-family: var(--tt-font);
+    font-size: 1.3rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 10px 0 16px;
+    border: 2px solid transparent;
+    transition:
+        background 0.1s,
+        color 0.1s,
+        border-color 0.1s;
+}
+
+.tt-cv-download:hover,
+.tt-cv-download:focus {
+    background: var(--tt-black);
+    color: var(--tt-green);
+    border-color: var(--tt-green);
+    outline: none;
+}
+
+.tt-cv-section {
+    margin: 16px 0;
+}
+
+.tt-cv-entry {
+    border-left: 3px solid var(--tt-blue);
+    padding: 6px 14px;
+    margin: 10px 0;
+    background: #00000a;
+}
+
+.tt-cv-entry-title {
+    color: var(--tt-yellow);
+    font-size: 1.25rem;
+    display: block;
+}
+
+.tt-cv-entry-org {
+    color: var(--tt-cyan);
+    font-size: 1.1rem;
+    display: block;
+}
+
+.tt-cv-entry-date {
+    color: #777;
+    font-size: 0.95rem;
+    display: block;
+    margin: 2px 0;
+}
+
+.tt-cv-entry-desc {
+    color: var(--tt-white);
+    font-size: 1.05rem;
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+.tt-skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.tt-skill-tag {
+    background: #000033;
+    border: 1px solid var(--tt-blue);
+    color: var(--tt-cyan);
+    padding: 4px 8px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+
+.tt-projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 12px 0;
+}
+
+.tt-project-card {
+    border: 1px solid #0000cc;
+    background: var(--tt-panel-bg);
+    padding: 12px;
+}
+
+.tt-project-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.tt-project-title {
+    color: var(--tt-yellow);
+    font-size: 1.35rem;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.tt-project-title:hover,
+.tt-project-title:focus {
+    color: var(--tt-white);
+}
+
+.tt-project-num {
+    color: #555;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.tt-project-desc {
+    color: var(--tt-white);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin: 6px 0;
+}
+
+.tt-project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0;
+}
+
+.tt-tech-tag {
+    background: #000033;
+    border: 1px solid var(--tt-blue);
+    color: var(--tt-cyan);
+    padding: 2px 8px;
+    font-size: 0.95rem;
+}
+
+.tt-project-links {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.tt-project-link {
+    text-decoration: none;
+    padding: 3px 10px;
+    font-family: var(--tt-font);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+}
+
+/* ============================================================
+   BLOG / ARCHIVE
+   ============================================================ */
+
+.tt-post-list {
+    list-style: none;
+    margin: 0;
+}
+
+.tt-post-item {
+    border-bottom: 1px dotted #001166;
+    padding: 12px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.tt-post-item:last-child {
+    border-bottom: none;
+}
+
+.tt-post-num {
+    color: var(--tt-yellow);
+    font-size: 1.15rem;
+    min-width: 52px;
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.tt-post-body {
+    flex: 1;
+}
+
+.tt-post-title-link {
+    color: var(--tt-cyan);
+    text-decoration: none;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    display: block;
+    line-height: 1.2;
+}
+
+.tt-post-title-link:hover,
+.tt-post-title-link:focus {
+    color: var(--tt-yellow);
+    outline: none;
+}
+
+.tt-post-meta {
+    color: #777;
+    font-size: 0.95rem;
+    margin: 3px 0;
+}
+
+.tt-post-excerpt {
+    color: #cccccc;
+    font-size: 1rem;
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+.tt-post-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.tt-tag {
+    background: #000033;
+    border: 1px solid #0000cc;
+    color: var(--tt-green);
+    padding: 1px 7px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.tt-tag:hover,
+.tt-tag:focus {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+    outline: none;
+}
+
+/* Pagination */
+.tt-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 8px;
+    padding-top: 12px;
+    border-top: 1px solid #0000cc;
+    flex-wrap: wrap;
+}
+
+.tt-pagination a,
+.tt-pagination span {
+    color: var(--tt-cyan);
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 3px 8px;
+    border: 1px solid #0000cc;
+}
+
+.tt-pagination a:hover,
+.tt-pagination a:focus {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+    outline: none;
+}
+
+.tt-pagination .current {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+}
+
+/* ============================================================
+   SINGLE POST / PAGE ARTICLE
+   ============================================================ */
+
+.tt-article-meta {
+    color: #777;
+    font-size: 1rem;
+    margin: 6px 0 12px;
+}
+
+.tt-article-meta .sep {
+    color: #333;
+    margin: 0 6px;
+}
+
+.tt-article-body {
+    color: var(--tt-white);
+    font-size: 1.1rem;
+    line-height: 1.65;
+}
+
+.tt-article-body h1,
+.tt-article-body h2,
+.tt-article-body h3,
+.tt-article-body h4 {
+    margin: 20px 0 8px;
+}
+
+.tt-article-body p {
+    margin-bottom: 14px;
+}
+
+.tt-article-body ul,
+.tt-article-body ol {
+    margin: 8px 0 14px 22px;
+}
+
+.tt-article-body a {
+    color: var(--tt-cyan);
+}
+
+.tt-article-body a:hover {
+    color: var(--tt-yellow);
+}
+
+.tt-article-body img {
+    border: 2px solid var(--tt-blue);
+    margin: 12px auto;
+    filter: saturate(0.85) contrast(1.05);
+}
+
+.tt-article-body blockquote {
+    border-left: 4px solid var(--tt-yellow);
+    padding: 8px 16px;
+    color: var(--tt-yellow);
+    margin: 12px 0;
+}
+
+.tt-article-body code {
+    font-family: var(--tt-font);
+}
+
+.tt-article-body pre {
+    margin: 12px 0;
+}
+
+.tt-article-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 24px;
+    border-top: 1px solid #0000cc;
+    padding-top: 12px;
+    flex-wrap: wrap;
+}
+
+.tt-article-nav a {
+    color: var(--tt-cyan);
+    text-decoration: none;
+    font-size: 1rem;
+    max-width: 48%;
+}
+
+.tt-article-nav a:hover,
+.tt-article-nav a:focus {
+    color: var(--tt-yellow);
+}
+
+.tt-article-nav .prev::before {
+    content: "◄ ";
+}
+.tt-article-nav .next::after {
+    content: " ►";
+}
+
+/* ============================================================
+   CONTACT PAGE
+   ============================================================ */
+
+.tt-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 12px 0;
+    align-items: start;
+}
+
+.tt-contact-info-list {
+    list-style: none;
+}
+
+.tt-contact-info-list li {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dotted #001166;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+
+.tt-contact-info-list li:last-child {
+    border-bottom: none;
+}
+
+.tt-contact-label {
+    color: var(--tt-yellow);
+    min-width: 90px;
+    flex-shrink: 0;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+}
+
+.tt-contact-value {
+    color: var(--tt-white);
+    font-size: 1.05rem;
+}
+
+.tt-contact-value a {
+    color: var(--tt-cyan);
+}
+
+/* Contact form */
+.tt-contact-form p {
+    margin-bottom: 0;
+}
+
+.tt-form-group {
+    margin-bottom: 12px;
+}
+
+.tt-form-label {
+    display: block;
+    color: var(--tt-cyan);
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+}
+
+.tt-form-input,
+.tt-form-textarea {
+    display: block;
+    width: 100%;
+    background: #000033;
+    color: var(--tt-white);
+    border: 1px solid var(--tt-blue);
+    padding: 8px 10px;
+    font-family: var(--tt-font);
+    font-size: 1.1rem;
+    outline: none;
+    transition:
+        border-color 0.1s,
+        box-shadow 0.1s;
+}
+
+.tt-form-input:focus,
+.tt-form-textarea:focus {
+    border-color: var(--tt-cyan);
+    box-shadow: 0 0 0 2px rgba(0, 238, 238, 0.25);
+}
+
+.tt-form-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.tt-form-submit {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+    border: 2px solid var(--tt-cyan);
+    padding: 8px 24px;
+    font-family: var(--tt-font);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition:
+        background 0.1s,
+        color 0.1s;
+    display: inline-block;
+}
+
+.tt-form-submit:hover,
+.tt-form-submit:focus {
+    background: var(--tt-cyan);
+    color: var(--tt-black);
+    outline: none;
+}
+
+/* WP Contact Form 7 overrides */
+.wpcf7 .wpcf7-form-control {
+    font-family: var(--tt-font) !important;
+    background: #000033 !important;
+    color: var(--tt-white) !important;
+    border: 1px solid var(--tt-blue) !important;
+    padding: 8px 10px !important;
+    font-size: 1.1rem !important;
+    width: 100% !important;
+}
+
+.wpcf7 .wpcf7-submit {
+    background: var(--tt-blue) !important;
+    color: var(--tt-white) !important;
+    border: 2px solid var(--tt-cyan) !important;
+    font-size: 1.2rem !important;
+    padding: 8px 20px !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+}
+
+/* ============================================================
+   404 PAGE
+   ============================================================ */
+
+.tt-404-wrap {
+    text-align: center;
+    padding: 30px 12px;
+}
+
+.tt-404-code {
+    display: block;
+    font-size: 5rem;
+    color: var(--tt-red);
+    line-height: 1;
+    margin: 0 0 8px;
+    animation: tt-blink 2s step-end infinite;
+}
+
+.tt-404-msg {
+    font-size: 1.5rem;
+    color: var(--tt-yellow);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.tt-404-sub {
+    color: var(--tt-white);
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+}
+
+/* ============================================================
+   WORDPRESS ALIGNMENT / IMAGE CLASSES
+   ============================================================ */
+
+.aligncenter {
+    display: block;
+    margin: 0 auto;
+}
+.alignleft {
+    float: left;
+    margin: 0 16px 8px 0;
+}
+.alignright {
+    float: right;
+    margin: 0 0 8px 16px;
+}
+
+.wp-caption {
+    border: 1px solid #0000cc;
+    padding: 4px;
+    display: inline-block;
+}
+
+.wp-caption-text {
+    color: #888;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 4px;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--tt-black);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--tt-blue);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #0000ff;
+}
+
+::selection {
+    background: var(--tt-blue);
+    color: var(--tt-white);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 680px) {
+    :root {
+        --tt-base: 17px;
+    }
+
+    .tt-screen {
+        border: none;
+    }
+
+    .tt-header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3px;
+    }
+
+    .tt-header-right {
+        gap: 8px;
+        font-size: 1rem;
+    }
+
+    .tt-grid-2,
+    .tt-grid-3,
+    .tt-contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tt-home-hero-name {
+        font-size: 1.75rem;
+    }
+    .tt-404-code {
+        font-size: 3.5rem;
+    }
+
+    .tt-nav a {
+        padding: 5px 8px;
+        font-size: 0.95rem;
+    }
+
+    .tt-btn {
+        font-size: 0.95rem;
+        padding: 4px 8px;
+    }
+
+    .tt-article-nav a {
+        max-width: 100%;
+    }
+
+    .tt-index-desc {
+        display: none;
+    }
+}
+
+@media (max-width: 400px) {
+    :root {
+        --tt-base: 15px;
+    }
+
+    .tt-nav a {
+        padding: 4px 6px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ============================================================
+   CRT TV BEZEL & SCREEN EFFECTS
+   ============================================================ */
+
+/* Dark room backdrop — the page is now a room, not just a div */
+body {
+    background: radial-gradient(ellipse at 50% 40%, #0a0a18 0%, #000000 75%);
+    padding: 40px 40px;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* Kill old scanlines — replaced by screen-level layer */
+body::before {
+    display: none;
+}
+
+/* CRT outer bezel — the physical TV cabinet */
+.crt-bezel {
+    width: 100%;
+    /* max-width: min(1200px, calc(100vw - 48px)); */
+    margin: 0 auto;
+    background: linear-gradient(155deg, #2e2e2e 0%, #1a1a1a 45%, #222222 100%);
+    border-radius: 12px 12px 8px 8px;
+    padding: 50px 50px;
+    box-shadow:
+        inset 0 1px 3px rgba(255, 255, 255, 0.06),
+        inset 0 -1px 3px rgba(0, 0, 0, 0.5),
+        0 0 0 1px #0e0e0e,
+        0 8px 24px rgba(0, 0, 0, 0.9),
+        0 2px 8px rgba(0, 0, 0, 0.7);
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Manufacturer label on bezel */
+.crt-bezel::before {
+    content: "SCREENTEXT · WEB EDITION";
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #252525;
+    font-family: var(--tt-font);
+    font-size: 11px;
+    letter-spacing: 4px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Power LED */
+.crt-bezel::after {
+    content: "";
+    position: absolute;
+    bottom: 5px;
+    right: 12px;
+    width: 9px;
+    height: 9px;
+    background: #00bb00;
+    border-radius: 50%;
+    box-shadow:
+        0 0 4px #00ff44,
+        0 0 12px rgba(0, 255, 68, 0.55),
+        0 0 24px rgba(0, 255, 68, 0.2);
+    animation: led-pulse 3s ease-in-out infinite;
+}
+
+@keyframes led-pulse {
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow:
+            0 0 4px #00ff44,
+            0 0 12px rgba(0, 255, 68, 0.55);
+    }
+    50% {
+        opacity: 0.55;
+        box-shadow:
+            0 0 2px #008822,
+            0 0 5px rgba(0, 180, 50, 0.3);
+    }
+}
+
+/* Screen housing — inner rounded frame, centred in the wider bezel */
+.crt-screen-wrap {
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-shadow:
+        0 0 0 2px #040404,
+        inset 0 0 20px rgba(0, 0, 0, 0.65),
+        0 0 40px rgba(0, 80, 220, 0.12),
+        0 0 80px rgba(0, 50, 180, 0.05);
+}
+
+/* Scanlines — tighter, more authentic */
+.crt-screen-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 0, 0, 0.2) 3px,
+        rgba(0, 0, 0, 0.2) 4px
+    );
+    pointer-events: none;
+    z-index: 10000;
+    border-radius: 10px;
+}
+
+/* Vignette — dark edges like a real phosphor CRT */
+.crt-screen-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at 50% 48%,
+        transparent 48%,
+        rgba(0, 0, 0, 0.38) 78%,
+        rgba(0, 0, 0, 0.72) 100%
+    );
+    pointer-events: none;
+    z-index: 10001;
+    border-radius: 10px;
+}
+
+/* Occasional screen flicker */
+@keyframes crt-flicker {
+    0%,
+    91%,
+    94%,
+    97%,
+    100% {
+        opacity: 1;
+    }
+    92%,
+    98% {
+        opacity: 0.96;
+    }
+    93% {
+        opacity: 0.88;
+    }
+    99% {
+        opacity: 0.93;
+    }
+}
+
+.crt-screen-wrap {
+    animation: crt-flicker 9s step-end infinite;
+}
+
+/* Strip the old border from .tt-screen — the bezel provides the frame */
+.tt-screen {
+    border-left: none !important;
+    border-right: none !important;
+}
+
+/* ============================================================
+   PHOSPHOR GLOW — warm CRT bloom on bright foreground elements
+   ============================================================ */
+
+h1,
+.tt-home-hero-name,
+.tt-404-code {
+    text-shadow:
+        0 0 6px rgba(255, 255, 0, 0.65),
+        0 0 18px rgba(255, 255, 0, 0.25),
+        0 0 36px rgba(255, 200, 0, 0.1);
+}
+
+h2,
+.tt-channel,
+.tt-home-hero-role {
+    text-shadow:
+        0 0 6px rgba(0, 238, 238, 0.6),
+        0 0 16px rgba(0, 238, 238, 0.22);
+}
+
+h3 {
+    text-shadow:
+        0 0 6px rgba(0, 238, 0, 0.55),
+        0 0 14px rgba(0, 238, 0, 0.2);
+}
+
+.tt-page-num {
+    text-shadow:
+        0 0 5px rgba(255, 255, 0, 0.8),
+        0 0 12px rgba(255, 255, 0, 0.35);
+}
+
+.tt-panel-header {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.25);
+}
+
+.tt-color-bar {
+    box-shadow: 0 2px 14px rgba(255, 255, 255, 0.18);
+}
+
+/* ============================================================
+   ASCII ART UTILITY CLASSES
+   ============================================================ */
+
+.tt-ascii {
+    font-family: var(--tt-font);
+    white-space: pre;
+    line-height: 1.25;
+    display: block;
+    overflow-x: auto;
+}
+
+.tt-ascii-hero {
+    color: var(--tt-cyan);
+    font-size: 1rem;
+    text-align: center;
+    text-shadow:
+        0 0 5px rgba(0, 238, 238, 0.55),
+        0 0 12px rgba(0, 238, 238, 0.22);
+    margin: 4px 0 10px;
+    letter-spacing: 0;
+}
+
+.tt-ascii-footer {
+    color: #2a5a3a;
+    font-size: 0.88rem;
+    text-align: center;
+    margin: 6px 0 2px;
+    letter-spacing: 0;
+    text-shadow:
+        0 0 6px rgba(0, 200, 80, 0.35),
+        0 0 14px rgba(0, 120, 50, 0.18);
+}
+
+.tt-ascii-404 {
+    color: var(--tt-red);
+    font-size: 0.88rem;
+    text-align: center;
+    text-shadow:
+        0 0 5px rgba(255, 34, 34, 0.55),
+        0 0 14px rgba(255, 34, 34, 0.22);
+    margin: 12px 0 8px;
+    letter-spacing: 0;
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+
+@media print {
+    body::before {
+        display: none;
+    }
+    .crt-bezel,
+    .crt-screen-wrap {
+        all: unset;
+        display: block;
+    }
+    .tt-nav,
+    .tt-footer,
+    .tt-color-bar {
+        display: none;
+    }
+    .tt-screen {
+        border: none;
+        max-width: 100%;
+    }
+    body {
+        background: white;
+        color: black;
+        font-family: "Courier New", monospace;
+        padding: 0;
+    }
+    a {
+        color: black;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — collapse bezel on small screens
+   ============================================================ */
+
+@media (max-width: 1260px) {
+    .crt-bezel {
+        padding: 4px 6px 12px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .crt-bezel {
+        padding: 4px 4px 12px;
+    }
+}
+
+@media (max-width: 680px) {
+    body {
+        padding: 0;
+    }
+
+    .crt-bezel {
+        border-radius: 0;
+        padding: 0 0 16px;
+        box-shadow: none;
+        background: #000;
+    }
+
+    .crt-bezel::before,
+    .crt-bezel::after {
+        display: none;
+    }
+
+    .crt-screen-wrap {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .crt-screen-wrap::before,
+    .crt-screen-wrap::after {
+        border-radius: 0;
+    }
+
+    h1,
+    .tt-home-hero-name,
+    h2,
+    h3,
+    .tt-page-num,
+    .tt-home-hero-role,
+    .tt-channel {
+        text-shadow: none;
+    }
 }
