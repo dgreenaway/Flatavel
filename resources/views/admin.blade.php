@@ -1,6 +1,8 @@
 @extends('layout')
 
 @section('title', 'Admin')
+@section('page_num', '999')
+
 
 @section('content')
 <div class="tt-page-title-bar magenta">

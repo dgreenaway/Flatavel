@@ -4,10 +4,12 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\AdminAuth;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\HomeController;
 
-
-// / redirects to /posts
-Route::get('/', fn() => redirect('/posts'));
+// / → home page
+Route::get('/', [HomeController::class, 'index']);
 
 // /posts → list all posts
 Route::get('/posts', [PostController::class, 'index']);
@@ -22,3 +24,16 @@ Route::post('/admin/upload', [AdminController::class, 'upload'])->middleware(Adm
 // /admin/login + login post
 Route::get('/admin/login', [AdminController::class, 'login']);
 Route::post('/admin/login', [AdminController::class, 'loginPost']);
+
+// /admin/logout
+Route::post('/admin/logout', [AdminController::class, 'logout']);
+
+// /admin/messages
+Route::get('/admin/messages', [AdminController::class, 'messages'])->middleware(AdminAuth::class);
+
+// /Contact page
+Route::get('/contact', [ContactController::class, 'index']);
+Route::post('/contact', [ContactController::class, 'send']);
+
+// /About page
+Route::get('about', [AboutController::class, 'index']);

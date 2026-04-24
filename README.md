@@ -4,13 +4,14 @@ A simple file-based blog built with Laravel as a learning project. No database �
 
 I'm using this to get familiar with how Laravel works: routing, controllers, models, views, middleware, and how it all fits together.
 
-## What it does
+## Pages
 
-- Lists all blog posts on the homepage
-- Each post has its own page at `/posts/{slug}`
-- Posts are written in Markdown with YAML front matter (title, date etc.)
-- No database needed — the `Post` model reads straight from the filesystem
-- Password-protected admin section for uploading new posts
+- `/` — Homepage with hero intro and latest 3 posts
+- `/posts` — Full blog post list
+- `/posts/{slug}` — Single post
+- `/about` — About me
+- `/contact` — Contact form (messages saved as JSON files)
+- `/admin` — Password-protected admin area (upload posts, view messages)
 
 ## Tech
 
@@ -18,6 +19,7 @@ I'm using this to get familiar with how Laravel works: routing, controllers, mod
 - PHP 8.5
 - [spatie/yaml-front-matter](https://github.com/spatie/yaml-front-matter) for parsing post metadata
 - [league/commonmark](https://github.com/thephpleague/commonmark) for converting Markdown to HTML
+- Ceefax-inspired teletext theme with CRT effects
 
 ## Running it locally
 
@@ -42,7 +44,7 @@ Post content here in Markdown.
 
 ## Admin
 
-Visit `/admin` to upload new posts. You'll be prompted for a password — set it in `.env`:
+Visit `/admin` to upload new posts and view contact messages. You'll be prompted for a password — set it in `.env`:
 
 ```
 ADMIN_PASSWORD=yourpasswordhere
@@ -53,3 +55,4 @@ ADMIN_PASSWORD=yourpasswordhere
 - `bootstrap/cache/` files are auto-generated, don't commit them
 - `.env` holds local config, never commit it
 - Sessions use the file driver — no database needed
+- Contact messages are saved as JSON files in `content/messages/`

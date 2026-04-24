@@ -18,7 +18,7 @@
                             <a href="/posts">DANIEL GREENAWAY</a>
                         </div>
                         <div class="tt-header-right">
-                            <span class="tt-page-num">P100</span>
+                            <span class="tt-page-num">@yield('page_num', '100')</span>
                             <span class="tt-channel">BLOG</span>
                             <span class="tt-clock" id="tt-clock"></span>
                         </div>
@@ -39,6 +39,10 @@
                         <li><a href="/posts">Blog</a></li>
                         <li><a href="/about">About</a></li>
                         <li><a href="/contact">Contact</a></li>
+                        @if (session('admin_authed'))
+                        <li><a href="/admin">Update Blog</a></li>
+                        <li><a href="/admin/messages">Messages</a></li>
+                        @endif
                     </ul>
                 </nav>
                 <main class="tt-main">
@@ -49,7 +53,14 @@
                 <footer class="tt-footer">
                     <div class="tt-footer-info">
                         <span>&copy; {{ date('Y') }} Daniel Greenaway</span>
-                        <span class="tt-cyan"><a href="/admin">Admin</a></span>
+                        @if (session('admin_authed'))
+                        <form action="/admin/logout" method="POST" style="display:inline">
+                            @csrf
+                            <button type="submit" class="tt-btn tt-btn-red">Logout</button>
+                        </form>
+                        @else
+                        <a href="/admin/login" class="tt-cyan">Login</a>
+                        @endif
                     </div>
                 </footer>
             </div>

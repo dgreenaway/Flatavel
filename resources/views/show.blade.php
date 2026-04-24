@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('title', $post->title)
+@section('page_num', '104')
 
 @section('content')
 <div class="tt-page-title-bar yellow">

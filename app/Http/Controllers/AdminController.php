@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+
 
 class AdminController
 {
@@ -39,5 +41,24 @@ class AdminController
         $file->move(base_path('content/posts'), $filename);
 
         return redirect('/admin')->with('success', 'Post uploaded: ' . $filename);
+    }
+
+    public function logout()
+    {
+        session()->forget('admin_authed');
+        return redirect('/admin/login');
+    }
+
+    public function messages()
+    {
+        $files = File::files(base_path('content/messages'));
+
+        $messages = collect($files)
+            ->map(fn($file) => json_decode(File::get($file), true))
+            ->sortByDesc('date')
+            ->values()
+            ->all();
+
+        return view('admin-messages', ['messages' => $messages]);
     }
 }

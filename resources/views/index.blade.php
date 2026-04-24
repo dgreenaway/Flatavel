@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('title', 'All Posts')
+@section('page_num', '100')
 
 @section('content')
 <div class="tt-page-title-bar">
