@@ -1,6 +1,6 @@
-# Laravel Lite Blog
+# Laravel Lite Blog - Flatavel
 
-A personal blog built with Laravel as a learning project. There is no database -- posts are Markdown files stored in `content/posts/` and the app reads them directly from the filesystem.
+A personal blog built with Laravel as a quick project. There is no database -- posts are Markdown files stored in `content/posts/` and the app reads them directly from the filesystem.
 
 I built this to get my head around how Laravel works: routing, controllers, models, views, middleware, and how it all connects together.
 
