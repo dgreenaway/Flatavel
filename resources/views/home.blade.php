@@ -6,7 +6,7 @@
 @section('content')
 <div class="tt-home-hero">
     <span class="tt-home-hero-name">Daniel Greenaway<span class="tt-home-hero-cursor"></span></span>
-    <span class="tt-home-hero-role">Web Person of a Particular Age</span>
+    <span class="tt-home-hero-role">Digital Marketing Specialist, Web Developer & Ongoing Project With No Clear Deadline.</span>
 </div>
 
 <div class="tt-ticker-bar">
