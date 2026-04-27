@@ -11,7 +11,7 @@
 
 <div class="tt-ticker-bar">
     <span class="tt-ticker-label">LATEST:</span>
-    Writing about Laravel, PHP, and building things for the web.
+    Occasional thoughts on building things for the web and immediately regretting the approach.
 </div>
 
 <div class="tt-content">
@@ -44,7 +44,7 @@
         <div class="tt-panel">
             <div class="tt-panel-header">About Me</div>
             <div class="tt-panel-body">
-                <p>Developer based in the UK, building things for the web.</p>
+                <p>UK-based digital marketer and developer. Building things for the web since before it was this complicated.</p>
                 <a href="/about" class="tt-btn tt-btn-blue" style="margin-top: 8px; display: inline-block;">Read More</a>
             </div>
         </div>
